@@ -1,3 +1,5 @@
+# python files
+*/__pycache__/
 
 # ignore data files. Must manually configure
 pnet_data/*
