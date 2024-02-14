@@ -1,5 +1,6 @@
 # ignore data files. Must manually configure
 pnet_data/*
+*results/
 
 # ignore pred files
 pi0*
