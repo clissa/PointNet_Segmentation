@@ -1,11 +1,14 @@
-# python files
-*/__pycache__/
-
 # ignore data files. Must manually configure
 pnet_data/*
 
-# ignore containers. These are not tracked here
-containers/*
-
 # ignore pred files
 pi0*
+
+# python files
+*/__pycache__/
+
+# notebook files
+*ipynb_checkpoints/
+
+# ignore containers. These are not tracked here
+containers/*
