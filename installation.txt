@@ -1,0 +1,9 @@
+conda env create --name pnet python==3.9
+
+conda install conda-forge::pyyaml
+conda install conda-forge::uproot
+conda install conda-forge::vector 
+conda install -c conda-forge numpy
+conda install ipykernel
+conda install -c conda-forge awkward-pandas
+conda install matplotlib==3.7.3
