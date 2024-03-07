@@ -946,32 +946,76 @@ if __name__ == "__main__":
     else:
         event_root_data = uproot.open(events_root_file)["EventTree"]
         preprocessed_file_name = "null"
-        pool.map(
-            process_events,
-            [
-                (
-                    event_root_data,
-                    preprocessed,
-                    preprocessed_file_name,
-                    event_start_idx,
-                    file_len,
-                    features_of_interest,
-                    dataset,
-                    file_name,
-                    save_dir,
-                    node_feature_names,
-                    cell_geo_data,
-                    sorter,
-                    max_points_queue,
-                    include_delta_p_pi0,
-                    include_delta_n_pi0,
-                    include_delta_p_pipm,
-                    include_delta_n_pipm,
-                    niche_case,
+        if num_procs > 1:
+            print(f"{' LAUNCH MULTIPROCESSING ':#^50}\n")
+            pool.map(
+                process_events,
+                [
+                    (
+                        event_root_data,
+                        preprocessed,
+                        preprocessed_file_name,
+                        event_start_idx,
+                        file_len,
+                        features_of_interest,
+                        dataset,
+                        file_name,
+                        save_dir,
+                        node_feature_names,
+                        cell_geo_data,
+                        sorter,
+                        max_points_queue,
+                        include_delta_p_pi0,
+                        include_delta_n_pi0,
+                        include_delta_p_pipm,
+                        include_delta_n_pipm,
+                        niche_case,
+                    )
+                    for event_start_idx in starting_event_idxs
+                ],
+            )
+
+            # as files are processed and the max num points are added to queue on completion, compare with current max
+            while not max_points_queue.empty():
+                q_max_points = max_points_queue.get()
+
+                if q_max_points > max_points:
+                    max_points = q_max_points
+
+            # update max points if a exceeded
+            try:
+                with open(save_dir + "max_points.txt") as f:
+                    current_max_points = int(f.readline())
+            except IOError:
+                current_max_points = 0
+
+            if max_points > current_max_points:
+                with open(save_dir + "max_points.txt", "w") as f:
+                    f.write("%d" % max_points)
+        else:
+            for event_start_idx in starting_event_idxs:
+                process_events(
+                    args=(
+                        event_root_data,
+                        preprocessed,
+                        preprocessed_file_name,
+                        event_start_idx,
+                        file_len,
+                        features_of_interest,
+                        dataset,
+                        file_name,
+                        save_dir,
+                        node_feature_names,
+                        cell_geo_data,
+                        sorter,
+                        max_points_queue,
+                        include_delta_p_pi0,
+                        include_delta_n_pi0,
+                        include_delta_p_pipm,
+                        include_delta_n_pipm,
+                        niche_case,
+                    )
                 )
-                for event_start_idx in starting_event_idxs
-            ],
-        )
 
     # as files are processed and the max num points are added to queue on completion, compare with current max
     while not max_points_queue.empty():
