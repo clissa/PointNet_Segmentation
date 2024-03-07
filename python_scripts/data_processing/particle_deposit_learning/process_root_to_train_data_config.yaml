@@ -1,19 +1,21 @@
-events_root_file: "/fast_scratch_1/jbohm/cell_particle_deposit_learning/delta/delta_root_files/delta_full.root"
-preprocessed: True
-dataset: "delta"
-file_len: 6000
+# events_root_file: "/home/luca/workspace/luca/PycharmProjects/PointNet_Segmentation/pnet_data/rho_full/rho_full.root"
+events_root_file: "/workspace/pointnet/pnet_data/rho_full/rho_full.root"
+preprocessed: False
+dataset: "rho"
+file_len: 600
 starting_event_idx: 0
-num_files_to_process: 63
-save_dir: "/fast_scratch_1/jbohm/cell_particle_deposit_learning/delta/"
-num_procs: 32
+num_files_to_process: 1
+# save_dir: "/home/luca/workspace/luca/PycharmProjects/PointNet_Segmentation/pnet_data/cell_particle_deposit_learning/rho/"
+save_dir: "/workspace/pointnet/pnet_data/cell_particle_deposit_learning/rho/"
+num_procs: 1
 
-preprocessed_file_name: "delta_full"
+preprocessed_file_name: "rho_full"
 i_low: 0 # 0 # 65 # 74 #76 # 82 # 110 # 130 # 132 # 154 # 164
 i_high: 64 # 64  #72 # 74 # 80 #  108 # 128 # 130 # 134 # 154 # 164
 
 include_delta_p_pi0: False
 include_delta_n_pi0: False
 include_delta_n_pipm: False
-include_delta_p_pipm: True
+include_delta_p_pipm: False
 
 niche_case: "none" #"1_track_1_n_3_pi0"
